@@ -1,5 +1,4 @@
-#' @title Download and Create a Tidy Data Frame of CRU CL2.0 Climatology
-#' Variables
+#' @title Download and Create a Tidy Data Frame of CRU CL2.0 Climatology Variables
 #'
 #'@description This function automates downloading and importing CRU CL2.0
 #'climatology data into R and creates a tidy data frame of the data. If
@@ -22,7 +21,7 @@
 #'\item{elv}{elevation (automatically converted to metres)}
 #'}
 #'For more information see the description of the data provided by CRU,
-#'\url{http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
+#'\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
 #'
 #' @details This function generates a data.frame object in R with the following
 #' possible fields as specified by the user:

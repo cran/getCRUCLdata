@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Travis-CI Build Status](https://travis-ci.org/adamhsparks/getCRUCLdata.svg?branch=master)](https://travis-ci.org/) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/adamhsparks/getCRUCLdata?branch=master&svg=true)](https://ci.appveyor.com/project/adamhsparks/getCRUCLdata) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/getCRUCLdata)](https://cran.r-project.org/package=getCRUCLdata)
+[![Travis-CI Build Status](https://travis-ci.org/adamhsparks/getCRUCLdata.svg?branch=master)](https://travis-ci.org/) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/adamhsparks/getCRUCLdata?branch=master&svg=true)](https://ci.appveyor.com/project/adamhsparks/getCRUCLdata) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/getCRUCLdata?color=blue)](https://github.com/metacran/cranlogs.app) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/getCRUCLdata)](https://cran.r-project.org/package=getCRUCLdata)
 
 getCRUCLdata
 ============
@@ -10,7 +10,7 @@ Download and Use CRU CL2.0 Climatology Data in R
 
 Author/Maintainer: Adam Sparks
 
-The getCRUCLdata package provides two functions that automate downloading and importing CRU CL2.0 climatology data into R, facilitate the calculation of minimum temperature and maximum temperature, and formats the data into a tidy data frame or a list of raster stack objects for use in an R session. CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arc-second resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
+The getCRUCLdata package provides two functions that automate downloading and importing CRU CL2.0 climatology data into R, facilitate the calculation of minimum temperature and maximum temperature, and formats the data into a tidy data frame or a list of raster stack objects for use in an R session. CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10-minute resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
 
 License: MIT + file LICENSE
 
@@ -29,6 +29,14 @@ Quick Start
 Install
 -------
 
+### Stable version
+
+A stable version of GSODR is available from [CRAN](https://cran.r-project.org/package=getCRUCLdata).
+
+``` r
+install.packages("getCRUdata")
+```
+
 ### Development version
 
 A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the [devtools package](https://CRAN.R-project.org/package=devtools), available from CRAN. I strive to keep the master branch on GitHub functional and working properly, although this may not always happen.
@@ -36,7 +44,7 @@ A development version is available from from GitHub. If you wish to install the 
 If you find bugs, please file a [report as an issue](https://github.com/adamhsparks/getCRUCLdata/issues).
 
 ``` r
-install.packages("devtools")
+#install.packages("devtools")
 devtools::install_github("adamhsparks/getCRUCLdata", build_vignettes = TRUE)
 ```
 
@@ -46,7 +54,7 @@ Using getCRUCLdata
 Creating tidy data frames for use in R
 --------------------------------------
 
-Create a tidy data frame of all CRU CL2.0 climatology elements available.
+The `create_CRU_df()` function creates tidy data frames of the CRU CL2.0 climatology elements. Illustrated here, create a tidy data frame of all CRU CL2.0 climatology elements available.
 
 ``` r
 library(getCRUCLdata)
@@ -75,7 +83,7 @@ t_rh <- create_CRU_df(tmp = TRUE,
 Creating raster stacks for use in R
 -----------------------------------
 
-The `create_CRU_stack` function provides functionality for producing a list of [raster](https://CRAN.R-project.org/package=raster) stack objects for use in an R session.
+The `create_CRU_stack()` function provides functionality for producing a list of [raster](https://CRAN.R-project.org/package=raster) stack objects for use in an R session.
 
 Create a list of raster stacks of all CRU CL2.0 climatology elements available.
 
@@ -100,6 +108,8 @@ Create a list of raster stacks of maximum and minimum temperature.
 tmn_tmx <- create_CRU_stack(tmn = TRUE,
                             tmx = TRUE)
 ```
+
+------------------------------------------------------------------------
 
 Data reference and abstract
 ===========================

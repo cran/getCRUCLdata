@@ -2,8 +2,7 @@
 % Please edit documentation in R/create_CRU_stack.R
 \name{create_CRU_stack}
 \alias{create_CRU_stack}
-\title{Download and Create a List of Raster Stack Objects From CRU CL2.0
-Climatology Variables}
+\title{Download and Create a List of Raster Stack Objects From CRU CL2.0 Climatology Variables}
 \usage{
 create_CRU_stack(pre = FALSE, pre_cv = FALSE, rd0 = FALSE, tmp = FALSE,
   dtr = FALSE, reh = FALSE, tmn = FALSE, tmx = FALSE, sunp = FALSE,
@@ -68,7 +67,7 @@ Nomenclature and units from readme.txt:
 \item{elv}{elevation (automatically converted to metres)}
 }
 For more information see the description of the data provided by CRU,
-\url{http://www.cru.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
+\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
 }
 \details{
 This function generates a data.frame object in R with the following
