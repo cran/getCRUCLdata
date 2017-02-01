@@ -247,8 +247,6 @@ data? Defaults to FALSE.<br/></li>
 return it in the data? Defaults to FALSE.<br/></li>
 </ul>
 
-<h2>Using getCRUCLdata</h2>
-
 <h2>Creating tidy data frames for use in R</h2>
 
 <p>The <code>create_CRU_df()</code> function creates tidy data frames of the CRU CL2.0 climatology elements. Illustrated here, create a tidy data frame of all CRU CL2.0 climatology elements available.</p>
@@ -275,7 +273,7 @@ CRU_data &lt;- create_CRU_df(pre = TRUE,
                       reh = TRUE)
 </code></pre>
 
-<h2>Creating raster stacks for use in R</h2>
+<h2>Creating raster stacks for use in R or saving for use in a GIS</h2>
 
 <p>The <code>create_CRU_stack()</code> function provides functionality for producing a list of <a href="https://CRAN.R-project.org/package=raster">raster</a> stack objects for use in an R session.</p>
 
@@ -299,6 +297,14 @@ CRU_data &lt;- create_CRU_df(pre = TRUE,
 
 <pre><code class="r">tmn_tmx &lt;- create_CRU_stack(tmn = TRUE,
                             tmx = TRUE)
+</code></pre>
+
+<p>Saving raster format files to a local disk as geotiff files in the <code>tmp</code> directory with a tmn or tmx prefix to the month for a filename.</p>
+
+<pre><code class="r">dir.create(file.path(&quot;~/tmp&quot;), showWarnings = FALSE)
+writeRaster(tmn_tmx$tmn, filename = paste0(&quot;~/tmp/tmn_&quot;, names(tmn_tmx$tmn)), bylayer = TRUE, format = &quot;GTiff&quot;)
+
+writeRaster(tmn_tmx$tmx, filename = paste0(&quot;~/tmp/tmx_&quot;, names(tmn_tmx$tmn)), bylayer = TRUE, format = &quot;GTiff&quot;)
 </code></pre>
 
 <h1>Reference and abstract</h1>

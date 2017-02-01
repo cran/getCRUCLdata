@@ -1,7 +1,7 @@
 #' @title Download and Create a List of Raster Stack Objects From CRU CL2.0 Climatology Variables
 #'
 #'@description This function automates downloading and importing CRU CL2.0
-#'climatology data into R and creates a list of raster stacks of the data. If
+#'climatology data into R and creates a list of raster stacks of the data.  If
 #'requested, minimum and maximum temperature may also be automatically
 #'calculated as described in the data readme.txt file.
 #'
@@ -225,9 +225,9 @@ create_CRU_stack <-
     names(y) <- "elv"
   }
 
-  y <- raster::crop(y, raster::extent(-60,
-                                      85,
-                                      -180,
-                                      180))
+  y <- raster::crop(y, raster::extent(-180,
+                                      180,
+                                      -60,
+                                      85))
   return(y)
 }

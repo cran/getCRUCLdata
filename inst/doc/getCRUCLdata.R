@@ -36,3 +36,9 @@
 #  tmn_tmx <- create_CRU_stack(tmn = TRUE,
 #                              tmx = TRUE)
 
+## ---- eval=FALSE---------------------------------------------------------
+#  dir.create(file.path("~/tmp"), showWarnings = FALSE)
+#  writeRaster(tmn_tmx$tmn, filename = paste0("~/tmp/tmn_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
+#  
+#  writeRaster(tmn_tmx$tmx, filename = paste0("~/tmp/tmx_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
+
