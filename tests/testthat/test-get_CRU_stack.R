@@ -1,25 +1,15 @@
+context("get_CRU_stack")
 
-context("create_CRU_stack")
+# Test that get_CRU_stack fails if no parameters are TRUE ----------------------
 
-# Test that create_CRU_stack fails if no dsn is specified ----------------------
-
-test_that("create_CRU_stack fails if no dsn is specified", {
-  expect_error(create_CRU_stack(pre = TRUE),
-               "File directory does not exist: .")
+test_that("get_CRU_stack fails if no parameters are TRUE", {
+  expect_error(get_CRU_stack(),
+               "You must select at least one element for download.")
 })
 
-# Test that create_CRU_stack fails if no parameters are TRUE -------------------
-
-test_that("create_CRU_stack fails if no parameters are TRUE", {
-  expect_error(create_CRU_stack(dsn = "~/"),
-               "You must select at least one element for importing")
-})
-
-# Test that create_CRU_stack returns a list of raster stacks -------------------
-
-test_that("create_CRU_stack returns a list of raster stacks", {
-
-  skip_on_cran()
+test_that("create_CRU_df lists only .dat.gz files in the given dsn", {
+  # create files for testing, these data are the first 10 lines of pre and tmp
+  # from the CRU CL v. 2.0 data
 
   unlink(list.files(
     path = tempdir(),
@@ -472,24 +462,65 @@ test_that("create_CRU_stack returns a list of raster stacks", {
       7.6
     )
   )
-  gz1 <- gzfile(paste0(tempdir(), "/grid_10min_pre.dat.gz"), "w")
-  utils::write.table(pre_data,
-                     file = gz1,
-                     col.names = FALSE,
-                     row.names = FALSE)
+  gz1 <- gzfile(paste0(tempdir(), "/grid_10min_pre.gz"), "w")
+  utils::write.table(
+    pre_data,
+    file = gz1,
+    col.names = FALSE,
+    row.names = FALSE
+  )
   close(gz1)
 
   gz1 <- gzfile(paste0(tempdir(), "/grid_10min_tmp.dat.gz"), "w")
-  utils::write.table(tmp_data,
-                     file = gz1,
-                     col.names = FALSE,
-                     row.names = FALSE)
+  utils::write.table(
+    tmp_data,
+    file = gz1,
+    col.names = FALSE,
+    row.names = FALSE
+  )
   close(gz1)
 
   dsn <- tempdir()
-  CRU_stack <- create_CRU_stack(pre = TRUE, dsn = dsn)
 
-  expect_named(CRU_stack, "pre")
-  expect_equal(raster::nlayers(CRU_stack$pre), 12)
-  expect_equal(length(CRU_stack), 1)
+  files <-
+    list.files(dsn, pattern = ".dat.gz$", full.names = TRUE)
+
+  expect_type(files, "character")
+  expect_equal(files, paste0(tempdir(), "/grid_10min_tmp.dat.gz"))
 })
+
+# Test that get_CRU_stack sets the cache dir properly when cache is TRUE -------
+
+test_that("get_CRU_stack sets the cache dir properly when cache is TRUE", {
+            skip_on_cran()
+            cache <- TRUE
+
+            if (isTRUE(cache)) {
+              cache_dir <- rappdirs::user_config_dir("getCRUCLdata")
+              if (!file.exists(cache_dir)) {
+                dir.create(cache_dir)
+              }
+            } else {
+              cache_dir <- tempdir()
+            }
+
+            expect_equal(cache_dir, rappdirs::user_config_dir("getCRUCLdata"))
+          })
+
+# Test that get_CRU_stack sets the cache dir properly when cache is FALSE ------
+
+test_that("get_CRU_stack sets the cache dir properly when cache is FALSE", {
+            skip_on_cran()
+            cache <- FALSE
+
+            if (isTRUE(cache)) {
+              cache_dir <- rappdirs::user_config_dir("getCRUCLdata")
+              if (!file.exists(cache_dir)) {
+                dir.create(cache_dir)
+              }
+            } else {
+              cache_dir <- tempdir()
+            }
+
+            expect_equal(cache_dir, tempdir())
+          })

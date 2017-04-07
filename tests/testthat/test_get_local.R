@@ -1,25 +1,12 @@
+context(".get_local")
 
-context("create_CRU_stack")
+# Test that .get_local creates a tibble of only specified elements -------------
 
-# Test that create_CRU_stack fails if no dsn is specified ----------------------
-
-test_that("create_CRU_stack fails if no dsn is specified", {
-  expect_error(create_CRU_stack(pre = TRUE),
-               "File directory does not exist: .")
-})
-
-# Test that create_CRU_stack fails if no parameters are TRUE -------------------
-
-test_that("create_CRU_stack fails if no parameters are TRUE", {
-  expect_error(create_CRU_stack(dsn = "~/"),
-               "You must select at least one element for importing")
-})
-
-# Test that create_CRU_stack returns a list of raster stacks -------------------
-
-test_that("create_CRU_stack returns a list of raster stacks", {
-
+test_that("Test that .get_local creates tibble of only specified elements", {
   skip_on_cran()
+
+  # create files for testing, these data are the first 10 lines of pre and tmp
+  # from the CRU CL v. 2.0 data
 
   unlink(list.files(
     path = tempdir(),
@@ -486,10 +473,34 @@ test_that("create_CRU_stack returns a list of raster stacks", {
                      row.names = FALSE)
   close(gz1)
 
-  dsn <- tempdir()
-  CRU_stack <- create_CRU_stack(pre = TRUE, dsn = dsn)
+  pre <- TRUE
+  pre_cv <- FALSE
+  rd0 <- FALSE
+  tmp <- FALSE
+  dtr <- FALSE
+  reh <- FALSE
+  tmn <- FALSE
+  tmx <- FALSE
+  sunp <- FALSE
+  frs <- FALSE
+  wnd <- FALSE
+  elv <- FALSE
+  cache_dir <- tempdir()
 
-  expect_named(CRU_stack, "pre")
-  expect_equal(raster::nlayers(CRU_stack$pre), 12)
-  expect_equal(length(CRU_stack), 1)
+  files <- .get_local(pre,
+                      pre_cv,
+                      rd0,
+                      tmp,
+                      dtr,
+                      reh,
+                      tmn,
+                      tmx,
+                      sunp,
+                      frs,
+                      wnd,
+                      elv,
+                      cache_dir)
+
+  expect_equal(length(files), 1)
+  expect_equal(basename(files[1]), "grid_10min_pre.dat.gz")
 })

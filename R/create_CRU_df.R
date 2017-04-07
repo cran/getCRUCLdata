@@ -1,9 +1,14 @@
-#' @title Download and Create a Tidy Data Frame of CRU CL2.0 Climatology Variables
+#' @title Create a Tidy Data Frame From CRU CL v.2.0 Climatology Variables on Local Disk
 #'
-#'@description This function automates downloading and importing CRU CL2.0
-#'climatology data into R and creates a tidy data frame of the data.  If
-#'requested, minimum and maximum temperature may also be automatically
-#'calculated as described in the data readme.txt file.
+#'@description This function automates importing CRU CL v.2.0 climatology data
+#'into R and creates a tidy data frame of the data.  If requested, minimum and
+#'maximum temperature may also be automatically calculated as described in the
+#'data readme.txt file.  This function can be useful if you have network
+#'connection issues that mean automated downloading of the files using R
+#'does not work properly.  In this instance it is recommended to use an FTP
+#'client (e.g., FileZilla), web browser or command line command (e.g., wget or
+#'curl) to download the files, save locally and use this function to import the
+#'data into R.
 #'
 #'Nomenclature and units from readme.txt:
 #'\describe{
@@ -11,7 +16,7 @@
 #'  \describe{
 #'    \item{cv}{cv of precipitation (percent)}
 #'  }
-#'\item{rd0}{wet-days (no days with >0.1mm rain per month)}
+#'\item{rd0}{wet-days (number days with >0.1mm rain per month)}
 #'\item{tmp}{mean temperature (degrees Celsius)}
 #'\item{dtr}{mean diurnal temperature range (degrees Celsius)}
 #'\item{reh}{relative humidity (percent)}
@@ -23,8 +28,6 @@
 #'For more information see the description of the data provided by CRU,
 #'\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
 #'
-#' @details This function generates a data.frame object in R with the following
-#' possible fields as specified by the user:
 #' @param pre Logical. Fetch precipitation (millimetres/month) from server and
 #'  return in the data frame? Defaults to FALSE.
 #' @param pre_cv Logical. Fetch cv of precipitation (percent) from server and
@@ -50,79 +53,64 @@
 #' data frame? Defaults to FALSE.
 #' @param elv Logical. Fetch elevation (converted to metres) and return it in
 #' the data frame? Defaults to FALSE.
+#' @param dsn Local file path where CRU CL v.2.0 .dat.gz files are located.
 #'
 #' @examples
-#' # Download data and create a raster stack of precipitation and temperature
+#' # Create a raster stack of precipitation and temperature from locally
+#' # available files
 #' \dontrun{
-#' CRU_pre_tmp <- create_CRU_df(pre = TRUE, tmp = TRUE)
+#' CRU_pre_tmp <- create_CRU_df(pre = TRUE, tmp = TRUE, dsn = "~/Downloads")
 #'}
 #'
 #' @seealso
-#' \code{\link{create_CRU_stack}}
+#' \code{\link{get_CRU_df}}
+#'
+#' @return A tidy data frame of CRU CL v. 2.0 climatology elements as a
+#' \code{\link[tibble]{tibble}} object
+#'
+#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
 #'
 #' @note
 #' This package automatically converts elevation values from kilometres to
 #' metres.
 #'
 #' @export
-create_CRU_df <- function(pre = FALSE,
-                          pre_cv = FALSE,
-                          rd0 = FALSE,
-                          tmp = FALSE,
-                          dtr = FALSE,
-                          reh = FALSE,
-                          tmn = FALSE,
-                          tmx = FALSE,
-                          sunp = FALSE,
-                          frs = FALSE,
-                          wnd = FALSE,
-                          elv = FALSE) {
+create_CRU_df <-   function(pre = FALSE,
+                            pre_cv = FALSE,
+                            rd0 = FALSE,
+                            tmp = FALSE,
+                            dtr = FALSE,
+                            reh = FALSE,
+                            tmn = FALSE,
+                            tmx = FALSE,
+                            sunp = FALSE,
+                            frs = FALSE,
+                            wnd = FALSE,
+                            elv = FALSE,
+                            dsn = "") {
+
   if (!isTRUE(pre) & !isTRUE(pre_cv) & !isTRUE(rd0) & !isTRUE(tmp) &
       !isTRUE(dtr) & !isTRUE(reh) & !isTRUE(tmn) & !isTRUE(tmx) &
       !isTRUE(sunp) & !isTRUE(frs) & !isTRUE(wnd) & !isTRUE(elv)) {
-    stop("You must select at least one parameter for download.")
+    stop("\nYou must select at least one element for importing.\n")
   }
 
-  cache_dir <- tempdir()
+  .validate_dsn(dsn)
 
-  .get_CRU(pre,
-           pre_cv,
-           rd0,
-           tmp,
-           dtr,
-           reh,
-           tmn,
-           tmx,
-           sunp,
-           frs,
-           wnd,
-           elv,
-           cache_dir)
-
-  CRU_df <-
-    .tidy_df(pre_cv, elv, tmn, tmx, cache_dir)
-
-  if (isTRUE(tmx)) {
-    tmx_df <- .calculate_tmx(CRU_df[, "tmp"], CRU_df[, "dtr"])
-    CRU_df <- data.frame(CRU_df, tmx_df)
-    names(CRU_df)[names(CRU_df) == "tmx_df"] <- "tmx"
-  }
-
-  if (isTRUE(tmn)) {
-    tmn_df <- .calculate_tmn(CRU_df[, "tmp"], CRU_df[, "dtr"])
-    CRU_df <- data.frame(CRU_df, tmn_df)
-    names(CRU_df)[names(CRU_df) == "tmn_df"] <- "tmn"
-  }
-
-  # Remove tmp/dtr if they aren't specified (necessary for tmn/tmx)
-  if (isTRUE(tmx) | isTRUE(tmn)) {
-    if (!isTRUE(tmp)) {
-      CRU_df <- subset(CRU_df, select = -tmp)
-    }
-
-    if (!isTRUE(dtr)) {
-      CRU_df <- subset(CRU_df, select = -dtr)
-    }
-  }
-  return(CRU_df)
+  files <- .get_local(pre,
+                      pre_cv,
+                      rd0,
+                      tmp,
+                      dtr,
+                      reh,
+                      tmn,
+                      tmx,
+                      sunp,
+                      frs,
+                      wnd,
+                      elv,
+                      cache_dir = dsn)
+  message("\nCreating data frame now.\n")
+  d <- create_df(tmn, tmx, tmp, dtr, pre, pre_cv, elv, files)
+  return(d)
 }

@@ -1,19 +1,24 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Travis-CI Build Status](https://travis-ci.org/adamhsparks/getCRUCLdata.svg?branch=master)](https://travis-ci.org/) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/adamhsparks/getCRUCLdata?branch=master&svg=true)](https://ci.appveyor.com/project/adamhsparks/getCRUCLdata) [![Coverage Status](https://img.shields.io/codecov/c/github/adamhsparks/getCRUCLdata/master.svg)](https://codecov.io/github/adamhsparks/getCRUCLdata?branch=master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/getCRUCLdata)](https://cran.r-project.org/package=getCRUCLdata) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/getCRUCLdata?color=blue)](https://github.com/metacran/cranlogs.app) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/getCRUCLdata?color=blue)](https://github.com/metacran/cranlogs.app) [![Research software impact](http://depsy.org/api/package/cran/getCRUCLdata/badge.svg)](http://depsy.org/package/r/getCRUCLdata) [![DOI](https://zenodo.org/badge/71445587.svg)](https://zenodo.org/badge/latestdoi/71445587)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/getCRUCLdata.svg?branch=master)](https://travis-ci.org/) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/getCRUCLdata?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/getCRUCLdata) [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/getCRUCLdata/master.svg)](https://codecov.io/github/ropensci/getCRUCLdata?branch=master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/getCRUCLdata)](https://cran.r-project.org/package=getCRUCLdata) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/getCRUCLdata?color=blue)](https://github.com/metacran/cranlogs.app) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/getCRUCLdata?color=blue)](https://github.com/metacran/cranlogs.app) [![Research software impact](http://depsy.org/api/package/cran/getCRUCLdata/badge.svg)](http://depsy.org/package/r/getCRUCLdata) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.466812.svg)](https://doi.org/10.5281/zenodo.466812) [![status](http://joss.theoj.org/papers/421837399efdbef2a248d0cf4a6c1d15/status.svg)](http://joss.theoj.org/papers/421837399efdbef2a248d0cf4a6c1d15)
 
 getCRUCLdata
 ============
 
-Download and Use CRU CL2.0 Climatology Data in R
-------------------------------------------------
+Use and Explore CRU CL v. 2.0 Climatology Elements in R
+-------------------------------------------------------
 
 Author/Maintainer: Adam Sparks
 
-The getCRUCLdata package provides two functions that automate downloading and importing CRU CL2.0 climatology data into R, facilitate the calculation of minimum temperature and maximum temperature, and formats the data into a tidy data frame or a list of raster stack objects for use in an R session. CRU CL2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10-minute resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
+Introduction to *getCRUCLdata*
+==============================
 
-Changes to original data
-------------------------
+The *getCRUCLdata* package provides functions that automate importing CRU CL v. 2.0 climatology data into R, facilitate the calculation of minimum temperature and maximum temperature, and formats the data into a [tidy data frame](http://vita.had.co.nz/papers/tidy-data.html) or a list of [*raster* `stack`](https://CRAN.R-project.org/package=raster) objects for use in an R session.
+
+CRU CL v. 2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arcminutes (0.1666667 degree) resolution. For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
+
+Changes to original CRU CL v. 2.0 data
+--------------------------------------
 
 This package automatically converts elevation values from kilometres to metres.
 
@@ -25,95 +30,208 @@ Quick Start
 Install
 -------
 
-Stable version
---------------
+### Stable version
 
-A stable version of GSODR is available from [CRAN](https://cran.r-project.org/package=getCRUCLdata).
+A stable version of *getCRUCLdata* is available from [CRAN](https://cran.r-project.org/package=getCRUCLdata).
 
 ``` r
-install.packages("getCRUdata")
+install.packages("getCRUCLdata")
 ```
 
-Development version
--------------------
+### Development version
 
 A development version is available from from GitHub. If you wish to install the development version that may have new features (but also may not work properly), install the [devtools package](https://CRAN.R-project.org/package=devtools), available from CRAN. I strive to keep the master branch on GitHub functional and working properly, although this may not always happen.
 
-If you find bugs, please file a [report as an issue](https://github.com/adamhsparks/getCRUCLdata/issues).
-
 ``` r
-#install.packages("devtools")
-devtools::install_github("adamhsparks/getCRUCLdata", build_vignettes = TRUE)
+if (!require("devtools")) {
+  install.packages("devtools")
+}
+
+devtools::install_github("ropensci/getCRUCLdata", build_vignettes = TRUE)
 ```
 
-Using getCRUCLdata
-------------------
+Using *getCRUCLdata*
+--------------------
 
-Creating tidy data frames for use in R
---------------------------------------
+### Creating tidy data frames for use in R
 
-The `create_CRU_df()` function creates tidy data frames of the CRU CL2.0 climatology elements. Illustrated here, create a tidy data frame of all CRU CL2.0 climatology elements available.
+The `get_CRU_df()` function automates the download process and creates tidy data frames as a [*tibble*](https://github.com/tidyverse/tibble) of the CRU CL v. 2.0 climatology elements.
 
 ``` r
 library(getCRUCLdata)
 
-CRU_data <- create_CRU_df(pre = TRUE,
-                          pre_cv = TRUE,
-                          rd0 = TRUE,
-                          tmp = TRUE,
-                          dtr = TRUE,
-                          reh = TRUE,
-                          tmn = TRUE,
-                          tmx = TRUE,
-                          sunp = TRUE,
-                          frs = TRUE,
-                          wnd = TRUE,
-                          elv = TRUE)
+CRU_data <- get_CRU_df(pre = TRUE,
+                       pre_cv = TRUE,
+                       rd0 = TRUE,
+                       tmp = TRUE,
+                       dtr = TRUE,
+                       reh = TRUE,
+                       tmn = TRUE,
+                       tmx = TRUE,
+                       sunp = TRUE,
+                       frs = TRUE,
+                       wnd = TRUE,
+                       elv = TRUE)
 ```
 
-Create a tidy data frame of mean temperature and relative humidity.
+Perhaps you only need one or two elements, it is easy to create a tidy data frame of mean temperature only.
 
 ``` r
-t_rh <- create_CRU_df(tmp = TRUE,
-                      reh = TRUE)
+t <- get_CRU_df(tmp = TRUE)
 ```
 
-Creating raster stacks for use in R
------------------------------------
+#### Plotting data from the tidy dataframe
 
-The `create_CRU_stack()` function provides functionality for producing a list of [raster](https://CRAN.R-project.org/package=raster) stack objects for use in an R session.
-
-Create a list of raster stacks of all CRU CL2.0 climatology elements available.
+Now that we have the data, we can plot it easily using [*ggplot2*](http://ggplot2.org) and the fantastic [*viridis*](https://CRAN.R-project.org/package=viridis) package for the colour scale.
 
 ``` r
-CRU_stack <- create_CRU_stack(pre = TRUE,
-                              pre_cv = TRUE,
-                              rd0 = TRUE,
-                              tmp = TRUE,
-                              dtr = TRUE,
-                              reh = TRUE,
-                              tmn = TRUE,
-                              tmx = TRUE,
-                              sunp = TRUE,
-                              frs = TRUE,
-                              wnd = TRUE,
-                              elv = TRUE)
+if (!require("ggplot2")) {
+  install.packages(ggplot2)
+}
+if (!require("viridis")) {
+  install.packages("viridis")
+}
+
+library(ggplot2)
+library(viridis)
 ```
 
-Create a list of raster stacks of maximum and minimum temperature.
+Now that the required packages are installed and loaded, we can generate a figure of temperatures using *ggplot2* to map the 12 months.
 
 ``` r
-tmn_tmx <- create_CRU_stack(tmn = TRUE,
-                            tmx = TRUE)
+ggplot(data = t, aes(x = lon, y = lat)) +
+  geom_raster(aes(fill = tmp)) +
+  scale_fill_viridis(option = "inferno") +
+  coord_quickmap() +
+  ggtitle("Global Mean Monthly Temperatures 1961-1990") +
+  facet_wrap(~ month, nrow = 4)
+```
+
+![Plot of global mean monthly temperatures 1961-1990](man/figures/README-unnamed-chunk-6-1.png)
+
+We can also generate a violin plot of the same data to visualise how the temperatures change throughout the year.
+
+``` r
+ggplot(data = t, aes(x = month, y = tmp)) +
+  geom_violin() +
+  ylab("Temperature (˚C)") +
+  labs(title = "Global Monthly Mean Land Surface Temperatures From 1960-1991",
+       subtitle = "Excludes Antarctica")
+```
+
+![Violin plot of global mean temperatures 1961-1990](man/figures/README-unnamed-chunk-7-1.png)
+
+#### Saving the tidy `tibble` as a CSV (comma separated values file) locally
+
+Save the resulting tidy `tibble` to local disk as a comma separated (CSV) file to local disk.
+
+``` r
+library(readr)
+
+write_csv(t, path = "~/CRU_tmp.csv")
+```
+
+### Creating raster stacks for use in R and saving for use in another GIS
+
+For working with spatial data, *getCRUCLdata* provides a function that create lists of [*raster*](https://CRAN.R-project.org/package=raster) stacks of the data.
+
+The `get_CRU_stack()` functions provide similar functionality to `get_CRU_df()`, but rather than returning a tidy data frame, it returns a list of `raster::stack()` objects for use in an R session.
+
+The `get_CRU_stack()` function automates the download process and creates a `raster::stack()` object of the CRU CL v. 2.0 climatology elements. Illustrated here is creating a `raster::stack()` of all CRU CL v. 2.0 climatology elements available.
+
+``` r
+CRU_stack <- get_CRU_stack(pre = TRUE,
+                           pre_cv = TRUE,
+                           rd0 = TRUE,
+                           tmp = TRUE,
+                           dtr = TRUE,
+                           reh = TRUE,
+                           tmn = TRUE,
+                           tmx = TRUE,
+                           sunp = TRUE,
+                           frs = TRUE,
+                           wnd = TRUE,
+                           elv = TRUE)
+```
+
+The `create_CRU_stack()` function works in the same way with only one minor difference. You must supply the location of the files on the local disk (`dsn`) that you wish to import.
+
+``` r
+t <- create_CRU_stack(tmp = TRUE, dsn = "~/Downloads")
+```
+
+#### Plotting raster stacks of tmin and tmax
+
+Because the stacks are in a `list()`, we need to access each element of the list individually to plot them, that's what the `[[1]]` or `[[2]]` is, the first or second element of the list. Here using `[[1]]` we will plot the monthly average minimum temperature for all twelve months.
+
+``` r
+library(raster)
+
+plot(tmn_tmx[[1]])
+```
+
+![Plot of raster layers from minimum temperature stack](man/figures/README-unnamed-chunk-10-1.png)
+
+To plot only one month from the stack is also possible. Here we plot maximum temperature for July. Note that we use To plot only one month from the stack is also possible. Here we plot maximum temperature for July. Note that we use indexing `[[2]]` as before but append a `$jul` to the object. This is the name of the layer in the raster stack. So, we are telling R to plot the second object in the `tmn_tmx` list, which is `tmx` and from that `raster::stack()`, plot only the raster layer for July.
+
+``` r
+plot(tmn_tmx[[2]]$jul)
+```
+
+![Plot of maximum temperatures for July](man/figures/README-unnamed-chunk-11-1.png)
+
+#### Saving raster objects to local disk
+
+The raster stack objects can be saved to disk as geotiff files (others are available, see help for `writeRaster()` and `writeFormats()` for more options) in the `Data` directory with a tmn or tmx prefix to the month for a file name.
+
+``` r
+library(raster)
+
+dir.create(file.path("~/Data"), showWarnings = FALSE)
+writeRaster(tmn_tmx$tmn, filename = paste0("~/Data/tmn_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
+
+writeRaster(tmn_tmx$tmx, filename = paste0("~/Data/tmx_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
+```
+
+Advanced usage
+--------------
+
+### Caching files for later use
+
+When using the `get_CRU_df()` or `get_CRU_stack()` functions, files may be cached in the users' local space for later use (optional) or stored in a temporary directory and deleted when the R session is closed and not saved (this is the default behaviour already illustrated above). Illustrated here, create a tidy data frame of all CRU CL v. 2.0 climatology elements available and cache them to save time in the future. *In order to take advantage of the cached data, you must use the `get_CRU_df()` function again in the future*. This functionality is somewhat modelled after the `raster::getData()` function that will not download files that already exist in the working directory, however in this case the function is portable and it will work for any working directory. That is, if you have cached the data and you use `get_CRU_df()` again, it will use the cached data no matter what working directory you are in. This functionality will be most useful for writing scripts that may be used several times rather than just once off or if you frequently use the data in multiple analyses the data will not be downloaded again if they have been cached.
+
+Create a list of raster stacks of maximum and minimum temperature. To take advantage of the previously cached files and save time by not downloading files, specify `cache = TRUE`.
+
+``` r
+tmn_tmx <- get_CRU_stack(tmn = TRUE,
+                         tmx = TRUE,
+                         cache = TRUE)
+```
+
+### Downloading files outside of R using another FTP program
+
+A second set of functions, `create_CRU_df()` and `create_CRU_stack()`, is provided for users that may have connectivity issues or simply wish to use something other than R to download the data files. You may also wish to use these if you want to download the data and specify where it is stored rather than using the `cache` functionality of `get_CRU_df()` and `get_CRU_stack()`.
+
+The `create_CRU_df()` and `create_CRU_stack()` functions work in the same way as `get_CRU_df()` and `get_CRU_stack()` functions with only one major difference. You must supply the location of the files on the local disk (`dsn`) that you wish to import. That is, the CRU CL v. 2.0 data files *must* be downloaded prior to the use of these functions using a program external to R, e.g., FileZilla or some other FTP program. In this instance it is recommended to use an FTP client (e.g., [FileZilla](https://filezilla-project.org)), a web browser\* or command line command (e.g., [wget](https://www.gnu.org/software/wget/) or [cURL](https://curl.haxx.se)) to download the files, save locally and use one of these functions to import the data into R and generate your desired object to work with.
+
+\*Beware, if using Safari, macOS will automatically unzip the files. This will cause the functions in R to fail as they expect a gzipped file.
+
+``` r
+t <- create_CRU_df(tmp = TRUE, dsn = "~/Downloads")
 ```
 
 ------------------------------------------------------------------------
 
+Documentation
+=============
+
+For complete documentation see the package website: <https://ropensci.github.io/getCRUCLdata/>
+
 Meta
 ====
 
-Data reference and abstract
----------------------------
+CRU CL v. 2.0 reference and abstract
+------------------------------------
 
 > Mark New (1,\*), David Lister (2), Mike Hulme (3), Ian Makin (4)
 
@@ -133,7 +251,9 @@ Contributors
 Other
 -----
 
--   Please [report any issues or bugs](https://github.com/adamhsparks/getCRUCLdata/issues).
+-   Please [report any issues or bugs](https://github.com/ropensci/getCRUCLdata/issues).
 -   License: MIT
--   Get citation information for `getCRUCLdata` in R typing `citation(package = "getCRUCLdata")`
+-   Get citation information for *getCRUCLdata* in R typing `citation(package = "getCRUCLdata")`
 -   Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
