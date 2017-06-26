@@ -376,9 +376,9 @@ plot(tmn_tmx[[1]])
 <pre><code class="r">library(raster)
 
 dir.create(file.path(&quot;~/Data&quot;), showWarnings = FALSE)
-writeRaster(tmn_tmx$tmn, filename = paste0(&quot;~/Data/tmn_&quot;, names(tmn_tmx$tmn)), bylayer = TRUE, format = &quot;GTiff&quot;)
+writeRaster(tmn_tmx$tmn, filename = file.path(&quot;~/Data/tmn_&quot;, names(tmn_tmx$tmn)), bylayer = TRUE, format = &quot;GTiff&quot;)
 
-writeRaster(tmn_tmx$tmx, filename = paste0(&quot;~/Data/tmx_&quot;, names(tmn_tmx$tmn)), bylayer = TRUE, format = &quot;GTiff&quot;)
+writeRaster(tmn_tmx$tmx, filename = file.path(&quot;~/Data/tmx_&quot;, names(tmn_tmx$tmn)), bylayer = TRUE, format = &quot;GTiff&quot;)
 </code></pre>
 
 <h2>Advanced usage</h2>

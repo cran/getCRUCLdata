@@ -78,9 +78,9 @@
 #  library(raster)
 #  
 #  dir.create(file.path("~/Data"), showWarnings = FALSE)
-#  writeRaster(tmn_tmx$tmn, filename = paste0("~/Data/tmn_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
+#  writeRaster(tmn_tmx$tmn, filename = file.path("~/Data/tmn_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
 #  
-#  writeRaster(tmn_tmx$tmx, filename = paste0("~/Data/tmx_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
+#  writeRaster(tmn_tmx$tmx, filename = file.path("~/Data/tmx_", names(tmn_tmx$tmn)), bylayer = TRUE, format = "GTiff")
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  tmn_tmx <- get_CRU_stack(tmn = TRUE,
