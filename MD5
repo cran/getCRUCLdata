@@ -1,7 +1,7 @@
-6e8c7757dd744b174f4a236b257c8fbe *DESCRIPTION
+632e44c9dc009e17488c1d6ad4713705 *DESCRIPTION
 562170f29a554c400ace7046107cf367 *LICENSE
 5c5a70a9ad68b1451d8283e0d8daab5d *NAMESPACE
-5229b19f6542739d7a616dee27926fc9 *NEWS.md
+8dfd5748bfb4a5702e7930f872ba9836 *NEWS.md
 923bfa8300a42c53f0beb9457a339735 *R/create_CRU_df.R
 46e93c3e2a869ca64614a7f05bb38202 *R/create_CRU_stack.R
 46c7beea2f455c50e13b8b8cf17c4be6 *R/create_df.R
@@ -13,12 +13,13 @@
 ff8b1c8ca3e9b4645115eadd22efd975 *R/manage_cached_files.R
 d0c0686f658cf077c76a2b569c129d76 *R/set_cache.R
 c38aa92bedb5e200d2509de5206534b3 *R/validate_dsn.R
-0711cea34a7c243bcf41b970a9775bca *README.md
-98ff457e15edd8df14ceffac29a2314e *build/vignette.rds
+4642076bef597cb0c03f8e250aed7a2c *R/zzz.R
+9a1bbfcdcaff4e8a10afcc732d8f924e *README.md
+ad40832a1210cb49cd7c1a65856ea288 *build/vignette.rds
 88a6a7fb4f5aec0e92a9771d52dcb2aa *inst/CITATION
 aee08acc8d270ec4c52afbd2e4d759ee *inst/doc/getCRUCLdata.R
-8d4ebc0c80ce7cec47c75d61dc49ff89 *inst/doc/getCRUCLdata.Rmd
-6d81ca6e85fab559e7c76c44046583e6 *inst/doc/getCRUCLdata.html
+98b5442f524d2116592cfde23205d527 *inst/doc/getCRUCLdata.Rmd
+97143d8fc2e865a6e6c195c647353fda *inst/doc/getCRUCLdata.html
 6d08eb025dd948eb19aa2872724d794f *inst/paper/paper.bib
 d4420a4a40e4ddcd71055c5e5d14beea *inst/paper/paper.md
 a6931f48b67a1bf1325596a7b50acd53 *inst/paper/paper.pdf
@@ -48,4 +49,4 @@ f6763df60d30f957846f8448c5e5bac2 *vignettes/README-unnamed-chunk-10-1.png
 c4a0f12f32a71f904c15075a839fee9c *vignettes/README-unnamed-chunk-11-1.png
 39bf2e2ff0c7e3fd348240faba7cb372 *vignettes/README-unnamed-chunk-6-1.png
 4ade7d383940209a02b6698d0faea19b *vignettes/README-unnamed-chunk-7-1.png
-8d4ebc0c80ce7cec47c75d61dc49ff89 *vignettes/getCRUCLdata.Rmd
+98b5442f524d2116592cfde23205d527 *vignettes/getCRUCLdata.Rmd
