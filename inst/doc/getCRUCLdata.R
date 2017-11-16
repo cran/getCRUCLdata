@@ -69,20 +69,28 @@
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(raster)
 #  
-#  plot(tmn_tmx[[1]])
+#  plot(t[[1]])
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  plot(tmn_tmx[[2]]$jul)
+#  plot(t[[2]]$jul)
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(raster)
 #  
 #  dir.create(file.path("~/Data"), showWarnings = FALSE)
-#  writeRaster(tmn_tmx$tmn, filename = file.path("~/Data/tmn_", names(tmn_tmx$tmn)),
-#              bylayer = TRUE, format = "GTiff")
+#  writeRaster(
+#    t$tmn,
+#    filename = file.path("~/Data/tmn_", names(t$tmn)),
+#    bylayer = TRUE,
+#    format = "GTiff"
+#    )
 #  
-#  writeRaster(tmn_tmx$tmx, filename = file.path("~/Data/tmx_", names(tmn_tmx$tmn)),
-#              bylayer = TRUE, format = "GTiff")
+#    writeRaster(
+#    t$tmx,
+#    filename = file.path("~/Data/tmx_", names(t$tmn)),
+#    bylayer = TRUE,
+#    format = "GTiff"
+#    )
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  tmn_tmx <- get_CRU_stack(tmn = TRUE,
