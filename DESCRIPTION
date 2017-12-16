@@ -1,10 +1,10 @@
 Package: getCRUCLdata
 Type: Package
 Title: Use and Explore CRU CL v. 2.0 Climatology Elements in R
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(person(given = "Adam", family = "Sparks", 
                   email = "adamhsparks@gmail.com", role = c("aut", "cre"),
-                  comment = "0000-0002-0061-8359"))
+                  comment = c(ORCID = "0000-0002-0061-8359")))
 Description: Provides functions that automate downloading and importing
     University of East Anglia Climate Research Unit (CRU) CL v. 2.0 climatology
     data into R, facilitates the calculation of minimum temperature and maximum
@@ -32,8 +32,8 @@ X-schema.org-keywords: anglia-cru, climate-data, cru-cl2, temperature,
         solar-radiation, diurnal-temperature, frost
 X-schema.org-isPartOf: https://ropensci.org
 NeedsCompilation: no
-Packaged: 2017-12-14 21:11:32 UTC; adamsparks
+Packaged: 2017-12-16 01:24:42 UTC; adamsparks
 Author: Adam Sparks [aut, cre] (0000-0002-0061-8359)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 Repository: CRAN
-Date/Publication: 2017-12-15 08:17:55 UTC
+Date/Publication: 2017-12-16 22:26:41 UTC
