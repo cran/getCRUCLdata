@@ -1,12 +1,11 @@
-a814e57b03228ee998fee40ac509176b *DESCRIPTION
+26212b8fcdf37dfea2c5321e624872a0 *DESCRIPTION
 562170f29a554c400ace7046107cf367 *LICENSE
-6c0895f3c5c4a696b6f92b1a18a891dc *NAMESPACE
-f1f9193623d60bbcb6f3778e1fbc4274 *NEWS.md
+d148093bd26f39220fe8a2adf6a7dd2e *NAMESPACE
+5493eee420d863d24767ea854646e37e *NEWS.md
 923bfa8300a42c53f0beb9457a339735 *R/create_CRU_df.R
 46e93c3e2a869ca64614a7f05bb38202 *R/create_CRU_stack.R
 47f3b7be857a9d2a3ca6ccd6346b458b *R/create_df.R
 6ae850c801abc9e509edeaa2f9190b42 *R/create_stacks.R
-bddf2d4353c7f746e6d1e99fde92bcce *R/deprecated_functions.R
 ca8cd81bdcfc1e6bb654f4f84479528d *R/getCRUCLdata.R
 cc4d8030d49574b6697e3fb2ea84b7d9 *R/get_CRU.R
 0d71364e0787473c6b98f7c17977e520 *R/get_CRU_df.R
@@ -14,9 +13,9 @@ cc4d8030d49574b6697e3fb2ea84b7d9 *R/get_CRU.R
 a1acb4d12693a666bee1c2847e27955f *R/manage_cached_files.R
 f90dfe236ce5440f9d2b60355c7c383f *R/set_cache.R
 512b05b0a2bc1de58fa35f877740cdd8 *R/validate_dsn.R
-4c94edf092f5c6855754b0ec3027ecb2 *R/zzz.R
-1d3b737a65b0658d1831bd07add97d40 *README.md
-f8a0cb51251cf8f5da77c9d514436e17 *build/vignette.rds
+afc7482c7ad5e9f3ddf12ab9b92ae7c9 *R/zzz.R
+c257f33b0920cdd46ac61cf40b05f50b *README.md
+5376727f6fb0b61a30aa3eb91d9f6dc3 *build/vignette.rds
 88a6a7fb4f5aec0e92a9771d52dcb2aa *inst/CITATION
 1abfd557c88947d0c82df0731990f238 *inst/doc/getCRUCLdata.R
 abf063cdb10bfdab2e2a8f34f0d2b908 *inst/doc/getCRUCLdata.Rmd
@@ -30,7 +29,6 @@ f6763df60d30f957846f8448c5e5bac2 *man/figures/README-unnamed-chunk-10-1.png
 c4a0f12f32a71f904c15075a839fee9c *man/figures/README-unnamed-chunk-11-1.png
 39bf2e2ff0c7e3fd348240faba7cb372 *man/figures/README-unnamed-chunk-6-1.png
 4ade7d383940209a02b6698d0faea19b *man/figures/README-unnamed-chunk-7-1.png
-ed8645e46e4624c8726418f467126cd4 *man/getCRUCLdata-deprecated.Rd
 26397080eef0a027d7f321aa2d720f85 *man/getCRUCLdata.Rd
 306c19982725011a817db08e25ec0366 *man/get_CRU_df.Rd
 1a4a509e3a01970d717391e32db3bd1e *man/get_CRU_stack.Rd
@@ -39,7 +37,7 @@ ed8645e46e4624c8726418f467126cd4 *man/getCRUCLdata-deprecated.Rd
 2a533b48ffdb3124ff508ff39a4e9b13 *tests/testthat/test-create_CRU_df.R
 a15cc0f31a961bfb348f81caf9d42b0e *tests/testthat/test-create_CRU_stack.R
 fab94bc853ddcb6c500dcb78dc87d51b *tests/testthat/test-create_df.R
-be4825f4e11a7cc05b1ca5b72432730d *tests/testthat/test-create_stack.R
+642e8ab8747dca0358cc3d0eb25e8fab *tests/testthat/test-create_stack.R
 490e93675bc486a9c1d3591c8fbd37f4 *tests/testthat/test-get_CRU.R
 be628660e2561a7aaef74e57ad318d1e *tests/testthat/test-get_CRU_df.R
 bb2a817ff3b3efa927d7afe6e17680a9 *tests/testthat/test-get_CRU_stack.R
