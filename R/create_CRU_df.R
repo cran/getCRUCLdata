@@ -68,7 +68,7 @@
 #' @return A tidy data frame of CRU CL v. 2.0 climatology elements as a
 #' \code{\link[tibble]{tibble}} object
 #'
-#' @author Adam H Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @note
 #' This package automatically converts elevation values from kilometres to
@@ -91,7 +91,8 @@ create_CRU_df <-   function(pre = FALSE,
   if (!isTRUE(pre) & !isTRUE(pre_cv) & !isTRUE(rd0) & !isTRUE(tmp) &
       !isTRUE(dtr) & !isTRUE(reh) & !isTRUE(tmn) & !isTRUE(tmx) &
       !isTRUE(sunp) & !isTRUE(frs) & !isTRUE(wnd) & !isTRUE(elv)) {
-    stop("\nYou must select at least one element for importing.\n")
+    stop("\nYou must select at least one element for importing.\n",
+        call. = FALSE)
   }
 
   .validate_dsn(dsn)

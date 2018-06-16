@@ -75,7 +75,7 @@
 #' @return A \code{\link[base]{list}} of \code{\link{raster}}
 #' \code{\link[raster]{stack}} objects of CRU CL v. 2.0 climatology elements
 #'
-#' @author Adam H. Sparks, \email{adamhsparks@gmail.com}
+#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @note
 #' This package automatically converts elevation values from kilometres to
@@ -107,7 +107,8 @@ get_CRU_stack <-
         !isTRUE(dtr) & !isTRUE(reh) & !isTRUE(tmn) & !isTRUE(tmx) &
         !isTRUE(sunp) &
         !isTRUE(frs) & !isTRUE(wnd) & !isTRUE(elv)) {
-      stop("You must select at least one element for download.")
+      stop("\nYou must select at least one element for download.\n",
+           call. = FALSE)
     }
 
     cache_dir <- .set_cache(cache)

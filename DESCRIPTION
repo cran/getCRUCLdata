@@ -1,7 +1,7 @@
 Package: getCRUCLdata
 Type: Package
 Title: Use and Explore CRU CL v. 2.0 Climatology Elements in R
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: person(given = "Adam",
                   family = "Sparks", 
                   email = "adamhsparks@gmail.com",
@@ -19,14 +19,14 @@ Description: Provides functions that automate downloading and importing
     <https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
 License: MIT + file LICENSE
 Depends: R (>= 3.2.0)
-Imports: data.table, dplyr, httr, hoardr, rappdirs, raster, tidyr,
-        tibble, utils
+Imports: data.table, dplyr, httr, hoardr, raster, tidyr, tibble, utils
 LazyData: TRUE
 RoxygenNote: 6.0.1
 ByteCompile: TRUE
-Suggests: covr, ggplot2, knitr, readr, rmarkdown, roxygen2 (>= 6.0.1),
-        sp, testthat, viridis
-URL: https://github.com/ropensci/getCRUCLdata
+Suggests: covr, ggplot2, knitr, readr, rmarkdown, rappdirs, roxygen2
+        (>= 6.0.1), sp, testthat, viridis
+URL: https://github.com/ropensci/getCRUCLdata,
+        https://ropensci.github.io/getCRUCLdata/
 BugReports: https://github.com/ropensci/getCRUCLdata/issues
 VignetteBuilder: knitr
 X-schema.org-applicationCategory: Tools
@@ -35,8 +35,8 @@ X-schema.org-keywords: anglia-cru, climate-data, cru-cl2, temperature,
         solar-radiation, diurnal-temperature, frost
 X-schema.org-isPartOf: https://ropensci.org
 NeedsCompilation: no
-Packaged: 2018-05-17 12:55:01 UTC; asparks
-Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>>)
+Packaged: 2018-06-16 00:55:33 UTC; adamsparks
+Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>)
 Maintainer: Adam Sparks <adamhsparks@gmail.com>
 Repository: CRAN
-Date/Publication: 2018-05-17 16:58:08 UTC
+Date/Publication: 2018-06-16 04:44:50 UTC
