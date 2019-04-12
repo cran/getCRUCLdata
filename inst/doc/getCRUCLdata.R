@@ -13,6 +13,8 @@
 #                         frs = TRUE,
 #                         wnd = TRUE,
 #                         elv = TRUE)
+#  
+#  CRU_data
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  t <- get_CRU_df(tmp = TRUE)
@@ -44,10 +46,7 @@
 #         subtitle = "Excludes Antarctica")
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  library(readr)
-#  
-#  write_csv(t, path = "~/CRU_tmp.csv")
-#  
+#  fwrite(x = t, file = "~/CRU_tmp.csv")
 
 ## ---- eval = FALSE-------------------------------------------------------
 #  CRU_stack <- get_CRU_stack(pre = TRUE,

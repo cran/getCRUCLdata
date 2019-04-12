@@ -1,3 +1,22 @@
+# getCRUCLdata 0.3.0
+
+## Minor changes
+
+- Remove Imports for _dplyr_, _tibble_ and _tidyr_ to lessen dependencies
+
+- Remove Suggests for _readr_ and _sp_
+
+- Add _tibble_ to Suggests. _tibble_ is no longer required for use of this
+package
+
+- Enhance documentation
+
+## Bug fixes
+
+- Update tests that spuriously failed on some systems due to tolerances
+
+- Update package to follow CRAN policies
+
 # getCRUCLdata 0.2.5
 
 ## Minor changes
@@ -76,10 +95,10 @@ them in the cache where the package will find them
 
 ## Deprecated functions
 
-`CRU_cache_list()` now superceded by`manage_cache$list()`
-`CRU_cache_details()` now superceded by `manage_cache$details()`
-`CRU_cache_delete()` now superceded by `manage_cache$delete()`
-`CRU_cache_delete_all()` now superceded by `manage_cache$delete_all()`
+`CRU_cache_list()` now superseded by`manage_cache$list()`
+`CRU_cache_details()` now superseded by `manage_cache$details()`
+`CRU_cache_delete()` now superseded by `manage_cache$delete()`
+`CRU_cache_delete_all()` now superseded by `manage_cache$delete_all()`
 
 --------------------------------------------------------------------------------
 
