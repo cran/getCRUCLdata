@@ -1,13 +1,22 @@
-# getCRUCLdata 0.3.0
+# getCRUCLdata 0.3.1
+
+## Bug fixes
+
+- Fix bug in documentation that prevented example from working
 
 ## Minor changes
+
+- Update URL in DESCRIPTION file
+
+--------------------------------------------------------------------------------
+
+# getCRUCLdata 0.3.0
+
+## Major changes
 
 - Remove Imports for _dplyr_, _tibble_ and _tidyr_ to lessen dependencies
 
 - Remove Suggests for _readr_ and _sp_
-
-- Add _tibble_ to Suggests. _tibble_ is no longer required for use of this
-package
 
 - Enhance documentation
 
@@ -16,6 +25,8 @@ package
 - Update tests that spuriously failed on some systems due to tolerances
 
 - Update package to follow CRAN policies
+
+--------------------------------------------------------------------------------
 
 # getCRUCLdata 0.2.5
 

@@ -62,6 +62,9 @@
 #' # without caching the data files
 #' CRU_pre_tmp <- get_CRU_df(pre = TRUE, tmp = TRUE)
 #'
+#' head(CRU_pre_tmp)
+#'
+#' library(tibble)
 #' CRU_pre_tmp
 #' }
 #'
@@ -72,7 +75,7 @@
 #' @return A tidy data frame of \acronym{CRU} \acronym{CL} v. 2.0 climatology
 #' elements as a \code{\link[tibble]{tibble}} object
 #'
-#' @author Adam H Sparks, \email{adamhsparks@@gmail.com}
+#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
 #'
 #' @note
 #' This package automatically converts elevation values from kilometres to
