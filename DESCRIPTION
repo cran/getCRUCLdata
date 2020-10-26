@@ -1,8 +1,8 @@
 Package: getCRUCLdata
 Type: Package
 Title: 'CRU' 'CL' v. 2.0 Climatology Client
-Version: 0.3.1
-Authors@R: person(given = "Adam",
+Version: 0.3.2
+Authors@R: person(given = "Adam H.",
                   family = "Sparks",
                   email = "adamhsparks@gmail.com",
                   role = c("aut", "cre"),
@@ -21,10 +21,10 @@ License: MIT + file LICENSE
 Depends: R (>= 3.2.0)
 Imports: curl, data.table, hoardr, raster, tibble, utils
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 ByteCompile: TRUE
-Suggests: covr, ggplot2, knitr, pkgdown, rmarkdown, rappdirs, roxygen2
-        (>= 6.1.0), testthat, viridis
+Suggests: covr, ggplot2, knitr, markdown, rmarkdown, rappdirs,
+        roxygen2, testthat, viridis
 Encoding: UTF-8
 URL: https://docs.ropensci.org/getCRUCLdata/
 BugReports: https://github.com/ropensci/getCRUCLdata/issues
@@ -36,8 +36,8 @@ X-schema.org-keywords: anglia-cru, climate-data, cru-cl2, temperature,
 X-schema.org-isPartOf: https://ropensci.org
 Language: en-GB
 NeedsCompilation: no
-Packaged: 2019-08-29 20:06:15 UTC; adamsparks
-Author: Adam Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>)
-Maintainer: Adam Sparks <adamhsparks@gmail.com>
+Packaged: 2020-10-26 01:12:34 UTC; u8004755
+Author: Adam H. Sparks [aut, cre] (<https://orcid.org/0000-0002-0061-8359>)
+Maintainer: Adam H. Sparks <adamhsparks@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-08-29 20:20:02 UTC
+Date/Publication: 2020-10-26 07:40:02 UTC

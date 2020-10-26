@@ -4,10 +4,21 @@
 \alias{get_CRU_stack}
 \title{Download and Create a List of Raster Stack Objects From CRU CL v. 2.0 Climatology Variables}
 \usage{
-get_CRU_stack(pre = FALSE, pre_cv = FALSE, rd0 = FALSE,
-  tmp = FALSE, dtr = FALSE, reh = FALSE, tmn = FALSE,
-  tmx = FALSE, sunp = FALSE, frs = FALSE, wnd = FALSE,
-  elv = FALSE, cache = FALSE)
+get_CRU_stack(
+  pre = FALSE,
+  pre_cv = FALSE,
+  rd0 = FALSE,
+  tmp = FALSE,
+  dtr = FALSE,
+  reh = FALSE,
+  tmn = FALSE,
+  tmx = FALSE,
+  sunp = FALSE,
+  frs = FALSE,
+  wnd = FALSE,
+  elv = FALSE,
+  cache = FALSE
+)
 }
 \arguments{
 \item{pre}{Logical.  Fetch precipitation (millimetres/month) from server and
@@ -59,7 +70,7 @@ A \code{\link[base]{list}} of \code{\link{raster}}
 }
 \description{
 This function automates downloading and importing CRU CL v. 2.0
-climatology data into \pkg{R} and creates a list of raster stacks of the
+climatology data into \R and creates a list of raster stacks of the
 data.  If requested, minimum and maximum temperature may also be
 automatically calculated as described in the data readme.txt file.  Data may
 be cached for later use by this function, saving time downloading files in
