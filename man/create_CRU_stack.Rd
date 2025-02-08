@@ -2,7 +2,23 @@
 % Please edit documentation in R/create_CRU_stack.R
 \name{create_CRU_stack}
 \alias{create_CRU_stack}
-\title{Create a List of Raster Stack Objects From CRU CL v. 2.0 Climatology Variables on Local Disk}
+\alias{create_cru_stack}
+\title{Create a list of terra rast objects of CRU CL v. 2.0 climatology elements from local disk files}
+\source{
+\describe{
+\item{pre}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_pre.dat.gz}}
+\item{rd0}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_rd0.dat.gz}}
+\item{tmp}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_tmp.dat.gz}}
+\item{dtr}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_dtr.dat.gz}}
+\item{reh}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_reh.dat.gz}}
+\item{sunp}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_sunp.dat.gz}}
+\item{frs}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_frs.dat.gz}}
+\item{wnd}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_wnd.dat.gz}, areas originally including Antarctica are removed.}
+\item{elv}{\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_elv.dat.gz}, values are converted from kilometres to metres.}
+}
+This package crops all spatial outputs to an extent of ymin = -60, ymax = 85,
+xmin = -180, xmax = 180.
+}
 \usage{
 create_CRU_stack(
   pre = FALSE,
@@ -17,74 +33,92 @@ create_CRU_stack(
   frs = FALSE,
   wnd = FALSE,
   elv = FALSE,
-  dsn = ""
+  dsn
+)
+
+create_cru_stack(
+  pre = FALSE,
+  pre_cv = FALSE,
+  rd0 = FALSE,
+  tmp = FALSE,
+  dtr = FALSE,
+  reh = FALSE,
+  tmn = FALSE,
+  tmx = FALSE,
+  sunp = FALSE,
+  frs = FALSE,
+  wnd = FALSE,
+  elv = FALSE,
+  dsn
 )
 }
 \arguments{
-\item{pre}{Logical. Fetch precipitation (millimetres/month) from server and
-return in the data frame? Defaults to \code{FALSE}.}
+\item{pre}{Loads precipitation (millimetres/month) from server and
+returns in the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{pre_cv}{Logical. Fetch cv of precipitation (percent) from server and
-return in the data frame? Defaults to \code{FALSE}. NOTE. Setting this to
-\code{TRUE} will always results in \strong{pre} being set to \code{TRUE} and
+\item{pre_cv}{Loads cv of precipitation (percent) from server and
+returns in the data frame, \code{TRUE}. Defaults to \code{FALSE}. NOTE. Setting this
+to \code{TRUE} will always results in \strong{pre} being set to \code{TRUE} and
 returned as well.}
 
-\item{rd0}{Logical. Fetch wet-days (number days with >0.1millimetres rain per
-month) and return in the data frame? Defaults to \code{FALSE}.}
+\item{rd0}{Loads wet-days (number days with >0.1 millimetres rain per
+month) and returns in the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{tmp}{Logical. Fetch temperature (degrees Celsius) and return it in the
-data frame? Defaults to \code{FALSE}.}
+\item{tmp}{Loads temperature (degrees Celsius) and returns it in the
+data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{dtr}{Logical. Fetch mean diurnal temperature range (degrees Celsius)
-and return it in the data frame? Defaults to \code{FALSE}.}
+\item{dtr}{Loads mean diurnal temperature range (degrees Celsius)
+and returns it in the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{reh}{Logical. Fetch relative humidity and return it in the data frame?
+\item{reh}{Loads relative humidity and returns it in the data frame, \code{TRUE}.
 Defaults to \code{FALSE}.}
 
-\item{tmn}{Logical. Calculate minimum temperature values (degrees Celsius)
-and return it in the data frame? Defaults to \code{FALSE}.}
+\item{tmn}{Calculate minimum temperature values (degrees Celsius)
+and returns it in the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{tmx}{Logical. Calculate maximum temperature (degrees Celsius) and
-return it in the data frame? Defaults to \code{FALSE}.}
+\item{tmx}{Calculate maximum temperature (degrees Celsius) and
+return it in the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{sunp}{Logical. Fetch sunshine, percent of maximum possible (percent of
-day length) and return it in data frame? Defaults to \code{FALSE}.}
+\item{sunp}{Loads sunshine, percent of maximum possible (percent of
+day length) and returns it in the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{frs}{Logical. Fetch ground-frost records (number of days with ground-
-frost per month) and return it in data frame? Defaults to \code{FALSE}.}
+\item{frs}{Loads ground-frost records (number of days with ground-
+frost per month) and returns it in the data frame, \code{TRUE}. Defaults to
+\code{FALSE}.}
 
-\item{wnd}{Logical. Fetch 10m wind speed (metres/second) and return it in the
-data frame? Defaults to \code{FALSE}.}
+\item{wnd}{Load 10 m wind speed (metres/second) and returns it in the
+data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
-\item{elv}{Logical. Fetch elevation (converted to metres) and return it in
-the data frame? Defaults to \code{FALSE}.}
+\item{elv}{Loads elevation (converted to metres) and returns it in
+the data frame, \code{TRUE}. Defaults to \code{FALSE}.}
 
 \item{dsn}{Local file path where \acronym{CRU} \acronym{CL} v.2.0 .dat.gz
 files are located.}
 }
 \value{
-A \code{\link[base]{list}} of \code{\link{raster}}
-\code{\link[raster]{stack}} objects of \acronym{CRU} \acronym{CL} v. 2.0
-climatology elements
+A \link[base:list]{base::list} of \link[terra:rast]{terra::rast} objects of \acronym{CRU}
+\acronym{CL} v. 2.0 climatology elements.
 }
 \description{
 Automates importing \acronym{CRU} \acronym{CL} v.2.0 climatology
-data and creates a \code{\link[raster]{stack}} of the data.  If requested,
-minimum and maximum temperature may also be automatically calculated as
-described in the data readme.txt file.  This function can be useful if you
+data and creates a \CRANpkg{terra} \link[terra:rast]{terra::rast} object of the
+data.  If requested, minimum and maximum temperature may also be
+automatically calculated as described in the data
+\href{https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt}{readme.txt} file.
+Data may be cached for later use by this function, saving time downloading
+files in future using this function.  This function can be useful if you
 have network connection issues that mean automated downloading of the files
-using \R does not work properly.  In this instance it is recommended to
-use an \acronym{FTP} client (\emph{e.g.}, FileZilla), web browser or command
-line command (\emph{e.g.}, wget or curl) to download the files, save locally
-and use this function to import the data into \R.
+using \R does not work properly or you have cached the files locally for
+your own future use.
+}
+\section{Nomenclature and Units}{
 
-Nomenclature and units from readme.txt:
 \describe{
 \item{pre}{precipitation (millimetres/month)}
-  \describe{
-    \item{cv}{cv of precipitation (percent)}
-  }
-\item{rd0}{wet-days (number days with >0.1mm rain per month)}
+\describe{
+\item{cv}{cv of precipitation (percent)}
+}
+\item{rd0}{wet-days (number days with >0.1 millimetres rain per month)}
 \item{tmp}{mean temperature (degrees Celsius)}
 \item{dtr}{mean diurnal temperature range (degrees Celsius)}
 \item{reh}{relative humidity (percent)}
@@ -96,19 +130,9 @@ Nomenclature and units from readme.txt:
 For more information see the description of the data provided by
 \acronym{CRU}, \url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
 }
-\note{
-This package automatically converts elevation values from kilometres to
-metres.
 
-This package crops all spatial outputs to an extent of ymin = -60, ymax = 85,
-xmin = -180, xmax = 180. Note that the original wind data include land area
-for parts of Antarctica, these data are excluded in the raster stacks
-generated by this function.
-}
 \examples{
-\donttest{
-# Create a raster stack of temperature from tmp
-# files in the tempdir() directory.
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 download.file(
   url = "https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_tmp.dat.gz",
@@ -118,11 +142,15 @@ download.file(
 CRU_tmp <- create_CRU_stack(tmp = TRUE, dsn = tempdir())
 
 CRU_tmp
+\dontshow{\}) # examplesIf}
 }
-
+\references{
+New, Mark, et al. "A high-resolution data set of surface climate
+over global land areas." Climate research 21.1 (2002): 1-25.
+\url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/new_et_al_10minute_climate_CR.pdf}
 }
 \seealso{
-\code{\link{get_CRU_stack}}
+\link{get_CRU_stack}.
 }
 \author{
 Adam H. Sparks, \email{adamhsparks@gmail.com}

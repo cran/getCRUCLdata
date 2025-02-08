@@ -1,66 +1,24 @@
-
-#' @title Create a List of Raster Stack Objects From CRU CL v. 2.0 Climatology Variables on Local Disk
+#' Create a list of terra rast objects of CRU CL v. 2.0 climatology elements from local disk files
 #'
-#'@description Automates importing \acronym{CRU} \acronym{CL} v.2.0 climatology
-#' data and creates a \code{\link[raster]{stack}} of the data.  If requested,
-#' minimum and maximum temperature may also be automatically calculated as
-#' described in the data readme.txt file.  This function can be useful if you
+#' Automates importing \acronym{CRU} \acronym{CL} v.2.0 climatology
+#' data and creates a \CRANpkg{terra} [terra::rast] object of the
+#' data.  If requested, minimum and maximum temperature may also be
+#' automatically calculated as described in the data
+#' [readme.txt](https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt) file.
+#' Data may be cached for later use by this function, saving time downloading
+#' files in future using this function.  This function can be useful if you
 #' have network connection issues that mean automated downloading of the files
-#' using \R does not work properly.  In this instance it is recommended to
-#' use an \acronym{FTP} client (\emph{e.g.}, FileZilla), web browser or command
-#' line command (\emph{e.g.}, wget or curl) to download the files, save locally
-#' and use this function to import the data into \R.
+#' using \R does not work properly or you have cached the files locally for
+#' your own future use.
 #'
-#' Nomenclature and units from readme.txt:
-#' \describe{
-#' \item{pre}{precipitation (millimetres/month)}
-#'   \describe{
-#'     \item{cv}{cv of precipitation (percent)}
-#'   }
-#' \item{rd0}{wet-days (number days with >0.1mm rain per month)}
-#' \item{tmp}{mean temperature (degrees Celsius)}
-#' \item{dtr}{mean diurnal temperature range (degrees Celsius)}
-#' \item{reh}{relative humidity (percent)}
-#' \item{sunp}{sunshine (percent of maximum possible (percent of day length))}
-#' \item{frs}{ground-frost (number of days with ground-frost per month)}
-#' \item{wnd}{10 metre windspeed (metres/second)}
-#' \item{elv}{elevation (automatically converted to metres)}
-#'}
-#'For more information see the description of the data provided by
-#' \acronym{CRU}, \url{https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt}
+#' @inheritSection get_CRU_df Nomenclature and Units
+#' @inheritParams create_CRU_df
+#' @inherit create_CRU_df author
+#' @inherit create_CRU_df source
+#' @inherit create_CRU_df references
+#' @inherit create_CRU_stack return
 #'
-#' @param pre Logical. Fetch precipitation (millimetres/month) from server and
-#'  return in the data frame? Defaults to \code{FALSE}.
-#' @param pre_cv Logical. Fetch cv of precipitation (percent) from server and
-#' return in the data frame? Defaults to \code{FALSE}. NOTE. Setting this to
-#' \code{TRUE} will always results in \strong{pre} being set to \code{TRUE} and
-#' returned as well.
-#' @param rd0 Logical. Fetch wet-days (number days with >0.1millimetres rain per
-#' month) and return in the data frame? Defaults to \code{FALSE}.
-#' @param dtr Logical. Fetch mean diurnal temperature range (degrees Celsius)
-#' and return it in the data frame? Defaults to \code{FALSE}.
-#' @param tmp Logical. Fetch temperature (degrees Celsius) and return it in the
-#' data frame? Defaults to \code{FALSE}.
-#' @param tmn Logical. Calculate minimum temperature values (degrees Celsius)
-#' and return it in the data frame? Defaults to \code{FALSE}.
-#' @param tmx Logical. Calculate maximum temperature (degrees Celsius) and
-#' return it in the data frame? Defaults to \code{FALSE}.
-#' @param reh Logical. Fetch relative humidity and return it in the data frame?
-#' Defaults to \code{FALSE}.
-#' @param sunp Logical. Fetch sunshine, percent of maximum possible (percent of
-#' day length) and return it in data frame? Defaults to \code{FALSE}.
-#' @param frs Logical. Fetch ground-frost records (number of days with ground-
-#' frost per month) and return it in data frame? Defaults to \code{FALSE}.
-#' @param wnd Logical. Fetch 10m wind speed (metres/second) and return it in the
-#' data frame? Defaults to \code{FALSE}.
-#' @param elv Logical. Fetch elevation (converted to metres) and return it in
-#' the data frame? Defaults to \code{FALSE}.
-#' @param dsn Local file path where \acronym{CRU} \acronym{CL} v.2.0 .dat.gz
-#' files are located.
-#' @examples
-#' \donttest{
-#' # Create a raster stack of temperature from tmp
-#' # files in the tempdir() directory.
+#' @examplesIf interactive()
 #'
 #' download.file(
 #'   url = "https://crudata.uea.ac.uk/cru/data/hrg/tmc/grid_10min_tmp.dat.gz",
@@ -70,27 +28,14 @@
 #' CRU_tmp <- create_CRU_stack(tmp = TRUE, dsn = tempdir())
 #'
 #' CRU_tmp
-#'}
 #'
 #' @seealso
-#' \code{\link{get_CRU_stack}}
+#' [get_CRU_stack].
 #'
-#' @return A \code{\link[base]{list}} of \code{\link{raster}}
-#' \code{\link[raster]{stack}} objects of \acronym{CRU} \acronym{CL} v. 2.0
-#' climatology elements
+#' @returns A [base::list] of [terra::rast] objects of \acronym{CRU}
+#' \acronym{CL} v. 2.0 climatology elements.
 #'
-#' @author Adam H. Sparks, \email{adamhsparks@@gmail.com}
-#'
-#' @note
-#' This package automatically converts elevation values from kilometres to
-#' metres.
-#'
-#' This package crops all spatial outputs to an extent of ymin = -60, ymax = 85,
-#' xmin = -180, xmax = 180. Note that the original wind data include land area
-#' for parts of Antarctica, these data are excluded in the raster stacks
-#' generated by this function.
-#'
-#' @export create_CRU_stack
+#' @export
 
 create_CRU_stack <- function(pre = FALSE,
                              pre_cv = FALSE,
@@ -104,40 +49,49 @@ create_CRU_stack <- function(pre = FALSE,
                              frs = FALSE,
                              wnd = FALSE,
                              elv = FALSE,
-                             dsn = "") {
-  if (!isTRUE(pre) & !isTRUE(pre_cv) & !isTRUE(rd0) & !isTRUE(tmp) &
-      !isTRUE(dtr) & !isTRUE(reh) & !isTRUE(tmn) & !isTRUE(tmx) &
-      !isTRUE(sunp) & !isTRUE(frs) & !isTRUE(wnd) & !isTRUE(elv)) {
-    stop("\nYou must select at least one element for importing.\n",
-         call. = FALSE)
-  }
+                             dsn) {
+  .check_vars_FALSE(
+    pre,
+    pre_cv,
+    rd0,
+    tmp,
+    dtr,
+    reh,
+    tmn,
+    tmx,
+    sunp,
+    frs,
+    wnd,
+    elv
+  )
 
   .validate_dsn(dsn)
 
   files <- .get_local(pre,
-                      pre_cv,
-                      rd0,
-                      tmp,
-                      dtr,
-                      reh,
-                      tmn,
-                      tmx,
-                      sunp,
-                      frs,
-                      wnd,
-                      elv,
-                      cache_dir = dsn)
+    pre_cv,
+    rd0,
+    tmp,
+    dtr,
+    reh,
+    tmn,
+    tmx,
+    sunp,
+    frs,
+    wnd,
+    elv,
+    cache_dir = dsn
+  )
 
   if (length(files) == 0) {
-    stop(
-      "\nNo CRU CL 2.0 data files were found in ",
-      dsn,
-      ". ",
-      "Please check that you have the proper file location.\n",
-      call. = FALSE
+    cli::cli_abort(
+      "No CRU CL 2.0 data files were found in {.var dsn}.
+      Please check that you have the proper file location."
     )
   }
 
-  s <- .create_stacks(tmn, tmx, tmp, dtr, pre, pre_cv, files)
-  return(s)
+  return(.create_stacks(tmn, tmx, tmp, dtr, pre, pre_cv, files))
 }
+
+#' @export
+#' @rdname create_CRU_stack
+create_cru_stack <- create_CRU_stack

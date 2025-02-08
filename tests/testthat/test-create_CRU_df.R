@@ -1,18 +1,19 @@
-
-context("create_CRU_df")
-
 # Test that create_CRU_df fails if no parameters are TRUE ----------------------
 
 test_that("create_CRU_df fails if no parameters are TRUE", {
-  expect_error(create_CRU_df(dsn = "~/"),
-               "You must select at least one element for import.")
+  expect_error(
+    create_CRU_df(dsn = "~/"),
+    "You must select at least one element for download or import."
+  )
 })
 
 # Test that create_CRU_df fails if no dsn is specified -------------------------
 
 test_that("create_CRU_df fails if no dsn is specified", {
-  expect_error(create_CRU_df(pre = TRUE),
-               "File directory does not exist: .")
+  expect_error(
+    create_CRU_df(pre = TRUE),
+    "You must define the dsn where you have stored the local files for import."
+  )
 })
 
 # Test that create_CRU_df fails if dsn does not contain CRU files --------------
@@ -21,10 +22,10 @@ test_that("create_CRU_df fails if dsn does not contain CRU files", {
   expect_error(create_CRU_df(pre = TRUE, dsn = ""))
 })
 
-# Test that create_CRU_df loads files and creates a proper tibble --------------
+# Test that create_CRU_df loads files and creates a proper df --------------
 
-test_that("create_CRU_df loads files and creates a proper tibble", {
-  skip_on_cran()
+test_that("create_CRU_df loads files and creates a proper df", {
+  skip_if_offline()
 
   # create files for testing, these data are the first 10 lines of pre and tmp
   # from the CRU CL v. 2.0 data

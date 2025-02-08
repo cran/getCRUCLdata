@@ -1,10 +1,7 @@
-context(".get_local")
-
 # Test that .get_local lists local files ---------------------------------------
 
-test_that("Test that .get_local lists local files",
-          {
-  skip_on_cran()
+test_that("Test that .get_local lists local files", {
+  skip_if_offline()
 
   # create files for testing, these data are the first 10 lines of pre and tmp
   # from the CRU CL v. 2.0 data
@@ -462,16 +459,18 @@ test_that("Test that .get_local lists local files",
   )
   gz1 <- gzfile(file.path(tempdir(), "grid_10min_pre.dat.gz"), "w")
   utils::write.table(pre_data,
-                     file = gz1,
-                     col.names = FALSE,
-                     row.names = FALSE)
+    file = gz1,
+    col.names = FALSE,
+    row.names = FALSE
+  )
   close(gz1)
 
   gz1 <- gzfile(file.path(tempdir(), "grid_10min_tmp.dat.gz"), "w")
   utils::write.table(tmp_data,
-                     file = gz1,
-                     col.names = FALSE,
-                     row.names = FALSE)
+    file = gz1,
+    col.names = FALSE,
+    row.names = FALSE
+  )
   close(gz1)
 
   pre <- TRUE
@@ -488,20 +487,22 @@ test_that("Test that .get_local lists local files",
   elv <- FALSE
   cache_dir <- tempdir()
 
-  files <- .get_local(pre,
-                      pre_cv,
-                      rd0,
-                      tmp,
-                      dtr,
-                      reh,
-                      tmn,
-                      tmx,
-                      sunp,
-                      frs,
-                      wnd,
-                      elv,
-                      cache_dir)
+  files <- .get_local(
+    pre,
+    pre_cv,
+    rd0,
+    tmp,
+    dtr,
+    reh,
+    tmn,
+    tmx,
+    sunp,
+    frs,
+    wnd,
+    elv,
+    cache_dir
+  )
 
-  expect_equal(length(files), 1)
-  expect_equal(basename(files[1]), "grid_10min_pre.dat.gz")
+  expect_length(files, 1)
+  expect_identical(basename(files[1]), "grid_10min_pre.dat.gz")
 })

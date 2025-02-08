@@ -9,9 +9,10 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteIndexEntry{getCRUCLdata}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{raster}
+  %\VignetteDepends{terra}
   %\VignetteDepends{ggplot2}
   %\VignetteDepends{viridis}
+  %\VignetteDepends{data.table}
 ---
 
 ```{r setup, include=FALSE}
@@ -25,13 +26,10 @@ knitr::opts_chunk$set(collapse = TRUE,
 
 ## Introduction to _getCRUCLdata_
 
-The _getCRUCLdata_ package provides functions that automate importing CRU CL v. 2.0 climatology data into R, facilitate the calculation of minimum temperature and maximum temperature, and formats the data into a
-[tidy data frame](http://vita.had.co.nz/papers/tidy-data.html) as a `tibble::tibble()`
-object or a [`list()`](https://www.rdocumentation.org/packages/base/versions/3.4.0/topics/list)
-of [`raster::stack()`](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/stack)
-objects for use in an R session.
+The _getCRUCLdata_ package provides functions that automate importing CRU CL v. 2.0 climatology data into R, facilitate the calculation of minimum temperature and maximum temperature, and formats the data into a [base::data.frame()] object or a [base::list()]
+of [terra::rast()] objects.
 
-CRU CL v. 2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arcminutes (0.1666667 degree) resolution.
+CRU CL v. 2.0 data are a gridded climatology of 1961-1990 monthly means released in 2002 and cover all land areas (excluding Antarctica) at 10 arcminutes (0.1666667 arc degree) resolution.
 For more information see the description of the data provided by the University of East Anglia Climate Research Unit (CRU), <https://crudata.uea.ac.uk/cru/data/hrg/tmc/readme.txt>.
 
 ## Changes to original CRU CL v. 2.0 data
@@ -74,9 +72,9 @@ The arguments for selecting the climatology elements for importing are:
 - **dsn** *For `create_CRU_stack()`* and *`create_CRU_df()`* only.
 Local file path where CRU CL v. 2.0 .dat.gz files are located.
 
-### Creating tidy data frames for use in R
+### Creating data frames for use in R
 
-The `get_CRU_df()` function automates the download process and creates tidy data frames as a `tibble::tibble()` of the CRU CL v. 2.0 climatology elements.
+The `get_CRU_df()` function automates the download process and creates data frames of the climatology elements.
 
 ```{r get_cru_df, eval=TRUE}
 library(getCRUCLdata)
@@ -97,7 +95,7 @@ CRU_data <- get_CRU_df(pre = TRUE,
 CRU_data
 ```
 
-Perhaps you only need one or two elements, it is easy to create a tidy data frame of mean temperature only.
+Perhaps you only need one or two elements, it is easy to create a data frame of mean temperature only.
 
 ```{r get_t_only, eval=TRUE}
 t <- get_CRU_df(tmp = TRUE)
@@ -105,11 +103,11 @@ t <- get_CRU_df(tmp = TRUE)
 t
 ```
 
-#### Plotting data from the tidy dataframe
+#### Plotting data from the data frame
 
 Now that we have the data, we can plot it easily using _ggplot2_ and the _viridis_ package for the colour scale.
 
-```{r plot_t, eval=TRUE, message=FALSE}
+```{r plot_t, eval=TRUE, message=FALSE, fig.cap="Maps of global temperatures from CRU CL v. 2.0 climatology covering the Earth's surface from ymin = -60, ymax = 85, xmin = -180, xmax = 180 degrees from 1960 to 1991."}
 library(ggplot2)
 library(viridis)
 
@@ -123,7 +121,7 @@ ggplot(data = t, aes(x = lon, y = lat, fill = tmp)) +
 
 We can also generate a violin plot of the same data to visualise how the temperatures change throughout the year.
 
-```{r violin_plot, eval=TRUE}
+```{r violin_plot, eval=TRUE, fig.cap = "Monthly values of global temperatures from CRU CL v. 2.0 climatology covering the Earth's surface from ymin = -60, ymax = 85, xmin = -180, xmax = 180 degrees from 1960 to 1991."}
 ggplot(data = t, aes(x = month, y = tmp)) +
   geom_violin() +
   ylab("Temperature (˚C)") +
@@ -131,23 +129,24 @@ ggplot(data = t, aes(x = month, y = tmp)) +
        subtitle = "Excludes Antarctica")
 ```
 
-#### Saving the tidy `data.frame` as a CSV (comma separated values file) locally
+#### Saving the `data.frame` as a CSV (comma separated values file) locally
 
-Save the resulting tidy `data.frame` to local disk as a comma separated (CSV)
+Save the resulting `data.frame` to local disk as a comma separated (CSV)
 file to local disk, using _data.table_'s `fwrite()`.
 
 ```{r save_t, eval=FALSE}
+library(data.table)
 fwrite(x = t, file = "~/CRU_tmp.csv")
 ```
 
-### Creating raster stacks for use in R and saving for use in another GIS
+### Creating terra raster stacks for use in R and saving for use in another GIS
 
-For working with spatial data, _getCRUCLdata_ provides a function that create lists of _raster_ stacks of the data.
+For working with spatial data, _getCRUCLdata_ provides a function that create lists of _terra_ stacks of the data.
 
-The `get_CRU_stack()` functions provide similar functionality to `get_CRU_df()`, but rather than returning a tidy data frame, it returns a list of `raster::stack()` objects for use in an R session.
+The `get_CRU_stack()` functions provide similar functionality to `get_CRU_df()`, but rather than returning a data frame, it returns a list of `terra::rast()` objects for use in an R session.
 
-The `get_CRU_stack()` function automates the download process and creates a `raster::stack()` object of the CRU CL v. 2.0 climatology elements.
-Illustrated here is creating a `raster::stack()` of all CRU CL v. 2.0 climatology elements available.
+The `get_CRU_stack()` function automates the download process and creates a `terra::rast()` object of the CRU CL v. 2.0 climatology elements.
+Illustrated here is creating a `terra::rast()` of all CRU CL v. 2.0 climatology elements available.
 
 ```{r get_cru_stack, eval = TRUE}
 CRU_stack <- get_CRU_stack(
@@ -175,32 +174,32 @@ You must supply the location of the files on the local disk (`dsn`) that you wis
 t <- create_CRU_stack(tmp = TRUE, dsn = "~/Downloads")
 ```
 
-#### Plotting raster stacks of tmin and tmax
+#### Plotting terra rast objects of tmin and tmax
 
 Because the stacks are in a `list()`, we need to access each element of the list individually to plot them, that's what the `[[1]]` or `[[2]]` is, the first or second element of the list.
 Here using `[[7]]` we will plot the monthly average minimum temperature for all twelve months.
 
 ```{r plot_cru_stack_tmn, eval=FALSE}
-library(raster)
+library(terra)
 
 plot(CRU_stack[[7]])
 ```
 
 To plot only one month from the stack is also possible. Here we plot maximum temperature for July.
 Note that we use indexing `[[2]]` as before but append a `$jul` to the object.
-This is the name of the layer in the `raster::stack()`.
-So, we are telling R to plot the second object in the `CRU_stack` list, which is `tmx` and from that raster stack, plot only the layer for July.
+This is the name of the layer in the `terra::rast()`.
+So, we are telling R to plot the second object in the `CRU_stack` list, which is `tmx` and from that terra rast, plot only the layer for July.
 
 ```{r plot_cru_stack_tmx, eval=FALSE}
 plot(t[[8]]$jul)
 ```
 
-#### Saving raster objects to local disk
+#### Saving terra objects to local disk
 
-The raster stack objects can be saved to disk as geotiff files (others are available, see help for `raster::writeRaster()` and `raster::writeFormats()` for more options) on the `Data` directory with a tmn or tmx prefix to the month for a file name.
+The [terra::rast()] objects can be saved to disk as geotiff files (others are available, see help for `terra::writeRaster()` for more options) on the `Data` directory with a tmn or tmx prefix to the month for a file name.
 
 ```{r save_stack, eval=FALSE}
-library(raster)
+library(terra)
 
 dir.create(file.path("~/Data"), showWarnings = FALSE)
 writeRaster(
@@ -241,6 +240,6 @@ are compared to an earlier data set at 0.5 degrees latitude/longitude resolution
 and show added value over most regions. The data will have many applications in
 applied climatology, biogeochemical modelling, hydrology and agricultural
 meteorology and are available through the School of Geography Oxford
-(http://www.geog.ox.ac.uk), the International Water Management Institute
-"World Water and Climate Atlas" (https://www.iwmi.cgiar.org/) and the Climatic
-Research Unit (http://www.cru.uea.ac.uk).
+(https://www.geog.ox.ac.uk), the International Water Management Institute
+"World Water and Climate Atlas" (https://www.iwmi.org/) and the Climatic
+Research Unit (https://www.uea.ac.uk/groups-and-centres/climatic-research-unit).

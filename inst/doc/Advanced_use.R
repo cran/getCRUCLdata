@@ -4,11 +4,13 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  tmn_tmx <- get_CRU_stack(tmn = TRUE,
-#                           tmx = TRUE,
-#                           cache = TRUE)
+## ----eval=FALSE---------------------------------------------------------------
+# tmn_tmx <- get_CRU_stack(
+#   tmn = TRUE,
+#   tmx = TRUE,
+#   cache = TRUE
+# )
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  t <- create_CRU_df(tmp = TRUE, dsn = "~/Downloads")
+## ----eval=FALSE---------------------------------------------------------------
+# t <- create_CRU_df(tmp = TRUE, dsn = "~/Downloads")
 
